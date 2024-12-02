@@ -11,6 +11,12 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      height: {
+        '1/288': '0.347222%', // 1/288 as a percentage
+      },
+      width: {
+        '1/7': '14.2857143%',
+      },
     },
   },
   plugins: [],
