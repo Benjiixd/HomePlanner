@@ -12,6 +12,18 @@ export class Activity {
     return hours * 60 + minutes;
   }
 
+  isWithinTimeRange(minutes) {
+    return minutes >= this.startInMinutes && minutes < this.endInMinutes;
+  }
+
+  calculateCoveredHeight() {
+    console.log('Calculating covered height');
+    let time = this.endInMinutes - this.startInMinutes;
+    console.log('Time:', time);
+    let height = time / 1440
+    console.log('Height:', height);
+  }
+
   getActivity() {
     return this;
   }
