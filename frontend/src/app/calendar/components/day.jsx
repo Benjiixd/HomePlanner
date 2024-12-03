@@ -1,9 +1,8 @@
 import { act } from "react";
 import { Activity, EmptyActivity } from "./activity";
-//import { EmptyActivity } from "./emptyActivity";
 import { faker } from '@faker-js/faker';
 
-export default function Day({date}) {
+export default function Day({ date }) {
     const roundToNearestFiveMinutes = (date) => {
         const minutes = date.getUTCMinutes();
         const roundedMinutes = Math.round(minutes / 5) * 5;
@@ -61,8 +60,7 @@ export default function Day({date}) {
         const heightPercentage = (activity.height * 100).toFixed(2) + '%'; // Convert decimal to percentage string
         if (activity.isEmpty) {
             return (
-                <div key={index} className="w-full " style={{ height: heightPercentage }}>
-                    
+                <div key={index} className="w-full" style={{ height: heightPercentage }}>
                 </div>
             );
         }
@@ -75,8 +73,17 @@ export default function Day({date}) {
 
     return (
         <div className="h-screen w-1/7 border-2 border-white flex flex-col items-center justify-items-center">
-            <p>{dateString}</p>
-            {divs}
+            <div className="w-full flex">
+                <div className="w-1/2 border-r-2 border-white">
+                    <p>{dateString}</p>
+                    {divs}
+                </div>
+                <div className="w-1/2">
+                    <p>{dateString}</p>
+                    {divs}
+                </div>
+            </div>
+            
         </div>
     );
 }
