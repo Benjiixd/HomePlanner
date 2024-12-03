@@ -1,5 +1,6 @@
 import { act } from "react";
-import { Activity } from "./activity";
+import { Activity, EmptyActivity } from "./activity";
+//import { EmptyActivity } from "./emptyActivity";
 import { faker } from '@faker-js/faker';
 
 export default function Day() {
@@ -33,22 +34,39 @@ export default function Day() {
         activities.push(new Activity(`Activity ${i + 1}`, startTime, endTime));
     }
 
-    console.log(activities);
+    console.log("Initial activities:", activities);
 
+    activities.sort((a, b) => a.startInMinutes - b.startInMinutes);
 
-    const divs = Array.from({ length: 288 }, (_, index) => {
-        const minutes = index * 5;
-        const activity = activities.find(activity => activity.isWithinTimeRange(minutes));
-        if (activity) {
-            
-            console.log(activity.calculateCoveredHeight());
+    console.log("Sorted activities:", activities);
+    if (activities[0].startInMinutes > 0) {
+        activities.unshift(new EmptyActivity(0, activities[0].startInMinutes));
+    }
+    console.log("After unshift:", activities);
+    for (let i = 0; i < activities.length - 1; i++) {
+        if (activities[i].endInMinutes === activities[i + 1].startInMinutes) {
+            continue;
+        }
+        console.log("Activity before splice:", activities[i]);
+        activities.splice(i + 1, 0, new EmptyActivity(activities[i].endInMinutes, activities[i + 1].startInMinutes));
+        console.log("After splice:", activities);
+    }
+    activities.sort((a, b) => a.startInMinutes - b.startInMinutes);
+
+    console.log("Final sorted activities:", activities);
+
+    const divs = activities.map((activity, index) => {
+        const heightPercentage = (activity.height * 100).toFixed(2) + '%'; // Convert decimal to percentage string
+        if (activity.isEmpty) {
+            return (
+                <div key={index} className="w-full " style={{ height: heightPercentage }}>
+                    
+                </div>
+            );
         }
         return (
-            <div
-                key={index}
-                className={`h-1/288 w-full ${activity ? 'bg-red-500' : 'bg-green-500'}`}
-            >
-                {activity ? activity.name : ''}
+            <div key={index} className="w-full border-2 border-white bg-blue-500" style={{ height: heightPercentage }}>
+                {activity.name}
             </div>
         );
     });
