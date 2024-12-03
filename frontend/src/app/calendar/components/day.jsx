@@ -3,7 +3,7 @@ import { Activity, EmptyActivity } from "./activity";
 //import { EmptyActivity } from "./emptyActivity";
 import { faker } from '@faker-js/faker';
 
-export default function Day() {
+export default function Day({date}) {
     const roundToNearestFiveMinutes = (date) => {
         const minutes = date.getUTCMinutes();
         const roundedMinutes = Math.round(minutes / 5) * 5;
@@ -55,6 +55,8 @@ export default function Day() {
 
     console.log("Final sorted activities:", activities);
 
+    let dateString = date.toISOString().split('T')[0];
+
     const divs = activities.map((activity, index) => {
         const heightPercentage = (activity.height * 100).toFixed(2) + '%'; // Convert decimal to percentage string
         if (activity.isEmpty) {
@@ -73,6 +75,7 @@ export default function Day() {
 
     return (
         <div className="h-screen w-1/7 border-2 border-white flex flex-col items-center justify-items-center">
+            <p>{dateString}</p>
             {divs}
         </div>
     );

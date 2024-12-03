@@ -16,6 +16,9 @@ export class Activity {
     console.log('Time:', time);
     let height = time / 1440
     console.log('Height:', height);
+    if (height < 0) {
+      return 100
+    }
     return height;
   }
 
@@ -39,6 +42,11 @@ export class EmptyActivity {
     console.log('Time:', time);
     let height = time / 1440
     console.log('Height:', height);
+    if (height < 0) {
+      
+      return 100
+    }
     return height;
+
   }
 }
